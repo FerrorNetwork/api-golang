@@ -53,7 +53,8 @@ func (s *Apiserver) configureLogger() error {
 }
 
 func (s *Apiserver) configureRouter() {
-	s.router.HandleFunc("/hello", s.handleHello())
+	s.router.HandleFunc("/hello", s.handleHello()).Methods("GET")
+	s.router.HandleFunc("/users", s.handleUsersCreate()).Methods("POST")
 }
 
 func (s *Apiserver) configureStore() error {
@@ -70,5 +71,11 @@ func (s *Apiserver) configureStore() error {
 func (s *Apiserver) handleHello() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "Hello")
+	}
+}
+
+func (s *Apiserver) handleUsersCreate() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "Users")
 	}
 }
